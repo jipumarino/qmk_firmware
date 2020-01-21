@@ -24,15 +24,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWER] = LAYOUT_planck_grid(
-    KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , _______ ,
-    _______, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL , _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_PIPE,
+    KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_PIPE,
+    KC_TILD, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL , _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_LABK, KC_RABK, KC_QUES, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
   ),
 
   [_RAISE] = LAYOUT_planck_grid(
-    KC_TILD, KC_EXLM, KC_AT  , KC_HASH, KC_DLR , KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______ ,
-    _______, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL , _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS,
+    KC_GRV , KC_EXLM, KC_AT  , KC_HASH, KC_DLR , KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
+    KC_TILD, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL , _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_LABK, KC_RABK, KC_QUES, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
   ),
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PAST, KC_P7  , KC_P8  , KC_P9  , KC_PPLS,
     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, KC_P4  , KC_P5  , KC_P6  , KC_PMNS,
     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1  , KC_P2  , KC_P3  , KC_PENT,
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0  , KC_P0  , KC_PDOT, KC_PEQL
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0  , KC_PDOT, KC_PEQL, KC_PEQL
   ),
 
 };
