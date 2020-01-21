@@ -17,27 +17,6 @@ enum preonic_layers {
 #define CTR_ESC CTL_T(KC_ESC)
 #define SFT_ENT SFT_T(KC_ENT)
 
-enum td_keycodes {
-  ATAB_DANCE,
-  CTAB_DANCE
-};
-
-#define ATAB TD(ATAB_DANCE)
-#define CTAB TD(CTAB_DANCE)
-
-typedef enum {
-  SINGLE_TAP,
-  SINGLE_HOLD
-} td_state_t;
-
-static td_state_t td_state;
-int cur_dance (qk_tap_dance_state_t *state);
-
-void atab_finished (qk_tap_dance_state_t *state, void *user_data);
-void atab_reset (qk_tap_dance_state_t *state, void *user_data);
-void ctab_finished (qk_tap_dance_state_t *state, void *user_data);
-void ctab_reset (qk_tap_dance_state_t *state, void *user_data);
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT_preonic_grid(
@@ -93,65 +72,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint32_t layer_state_set_user(uint32_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
-
-
-int cur_dance (qk_tap_dance_state_t *state) {
-  if (state->count == 1) {
-    if (state->interrupted || !state->pressed) return SINGLE_TAP;
-    else return SINGLE_HOLD;
-  } else {
-    return 2;
-  }
-}
-
-void atab_finished (qk_tap_dance_state_t *state, void *user_data) {
-  td_state = cur_dance(state);
-  switch (td_state) {
-    case SINGLE_TAP:
-      register_mods(MOD_BIT(KC_RALT));
-      register_code16(KC_TAB);
-      break;
-    case SINGLE_HOLD:
-      register_mods(MOD_BIT(KC_RALT));
-  }
-}
-
-void atab_reset (qk_tap_dance_state_t *state, void *user_data) {
-  switch (td_state) {
-    case SINGLE_TAP:
-      unregister_code16(KC_TAB);
-      unregister_mods(MOD_BIT(KC_RALT));
-      break;
-    case SINGLE_HOLD:
-      unregister_mods(MOD_BIT(KC_RALT));
-  }
-}
-
-void ctab_finished (qk_tap_dance_state_t *state, void *user_data) {
-  td_state = cur_dance(state);
-  switch (td_state) {
-    case SINGLE_TAP:
-      register_mods(MOD_BIT(KC_RCTL));
-      register_code16(KC_TAB);
-      break;
-    case SINGLE_HOLD:
-      register_mods(MOD_BIT(KC_RCTL));
-  }
-}
-
-void ctab_reset (qk_tap_dance_state_t *state, void *user_data) {
-  switch (td_state) {
-    case SINGLE_TAP:
-      unregister_code16(KC_TAB);
-      unregister_mods(MOD_BIT(KC_RCTL));
-      break;
-    case SINGLE_HOLD:
-      unregister_mods(MOD_BIT(KC_RCTL));
-  }
-}
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-  [ATAB_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, atab_finished, atab_reset),
-  [CTAB_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctab_finished, ctab_reset),
-};
-
