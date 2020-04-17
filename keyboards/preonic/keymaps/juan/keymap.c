@@ -45,14 +45,84 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, RESET  , DEBUG  , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, XXXXXXX, KC_MPRV, KC_MNXT, KC_MUTE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_MPLY, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   ),
 
 };
 
+static uint8_t hyper_state = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // Custom media keys with Hyper/Function key
   switch (keycode) {
+    case KC_HYPR:
+      if (record->event.pressed) {
+        hyper_state = 1;
+      } else {
+        hyper_state = 0;
+      }
+      break;
+    case KC_SPC:
+      if (hyper_state == 1) {
+        if (record->event.pressed) {
+          register_code(KC_MPLY);
+        } else {
+          unregister_code(KC_MPLY);
+        }
+        return false;
+      }
+      break;
+    case KC_LCTL:
+      if (hyper_state == 1) {
+        if (record->event.pressed) {
+          register_code(KC_MUTE);
+        } else {
+          unregister_code(KC_MUTE);
+        }
+        return false;
+      }
+      break;
+    case KC_LALT:
+      if (hyper_state == 1) {
+        if (record->event.pressed) {
+          register_code(KC_VOLD);
+        } else {
+          unregister_code(KC_VOLD);
+        }
+        return false;
+      }
+      break;
+    case KC_LGUI:
+      if (hyper_state == 1) {
+        if (record->event.pressed) {
+          register_code(KC_VOLU);
+        } else {
+          unregister_code(KC_VOLU);
+        }
+        return false;
+      }
+      break;
+    case LOWER:
+      if (hyper_state == 1) {
+        if (record->event.pressed) {
+          register_code(KC_MPRV);
+        } else {
+          unregister_code(KC_MPRV);
+        }
+        return false;
+      }
+      break;
+    case RAISE:
+      if (hyper_state == 1) {
+        if (record->event.pressed) {
+          register_code(KC_MNXT);
+        } else {
+          unregister_code(KC_MNXT);
+        }
+        return false;
+      }
+      break;
   }
   return true;
 }
